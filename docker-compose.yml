@@ -1,0 +1,28 @@
+version: "3"
+
+services:
+    rabbitmq:
+        image: rabbitmq:3.9-management
+        hostname: "rabbitmq"
+        ports:
+            - "15672:15672"
+            - "5672:5672"
+    web:
+        build:
+            context: server
+        image: kam3nskii/hw6_rest_server
+        volumes:
+            - data-volume:/data
+    worker:
+        build: 
+            context: worker
+        image: kam3nskii/hw6_rest_worker
+        volumes:
+            - data-volume:/data
+    pytest:
+        build: tests/
+        image: kam3nskii/hw6_rest_pytest
+
+volumes:
+    data-volume:
+    
